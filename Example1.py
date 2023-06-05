@@ -5,19 +5,19 @@ from ParseUsers import User
 USERS_URL = "https://jsonplaceholder.typicode.com/users"
 
 def get_username_sync():
-    start_time = time.time()
+    start_time = time.perf_counter()
     response_list = perform_get_request(USERS_URL)
-    end_time = time.time()
-    print(f"Execution time for sync call {end_time - start_time}")
+    elapsed = time.perf_counter() - start_time
+    print(f"Execution time for sync call {elapsed:0.2f}")
     for response in response_list:
         user = User(response)
         print(user.username, user.name, user.email)
 
 async def get_username_async():
-    start_time = time.time()
+    start_time = time.perf_counter()
     response_list = await perform_get_request_async(USERS_URL)
-    end_time = time.time()
-    print(f"Execution time for async call {end_time - start_time}")
+    elapsed = time.perf_counter() - start_time
+    print(f"Execution time for async call {elapsed:0.2f}")
     for response in response_list:
         user = User(response)
         print(user.username, user.name, user.email)
