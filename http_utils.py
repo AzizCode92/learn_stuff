@@ -1,5 +1,8 @@
 import requests
+import aiohttp
 
+POST_URL = "https://jsonplaceholder.typicode.com/posts"
+COMMENT_URL = "https://jsonplaceholder.typicode.com/comments"
 
 def perform_get_request(url):
     """
@@ -17,4 +20,8 @@ def perform_get_request(url):
     except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
         return None
-
+async def fetch_url(url):
+    async with aiohttp.client.ClientSession() as cs:
+        async with cs.get(url) as response:
+            posts = await response.json()
+            return posts
